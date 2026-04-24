@@ -114,16 +114,21 @@
     });
   });
 
-  // ---------- 5. Formulario de suscripción (Supabase) ----------
+  // ---------- 5. Cliente Supabase (compartido) ----------
   const SUPABASE_URL = 'https://qmhhumtnvgocktacgxao.supabase.co';
   const SUPABASE_KEY = 'sb_publishable_ioHeTOusppm0RkqiELhwAg_IftXD6Vk';
+  const supa = window.supabase
+    ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
+    : null;
 
+  const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  // ---------- 5a. Formulario de suscripción ----------
   const subscribeForm  = document.getElementById('subscribeForm');
   const subscribeMsg   = document.getElementById('subscribeMsg');
   const subscribeInput = document.getElementById('subscribeEmail');
 
-  if (subscribeForm && window.supabase) {
-    const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  if (subscribeForm && supa) {
     const button = subscribeForm.querySelector('button');
     const originalLabel = button.textContent;
 
@@ -136,7 +141,7 @@
       e.preventDefault();
       const email = subscribeInput.value.trim();
 
-      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      if (!email || !isValidEmail(email)) {
         showMsg('Por favor ingresa un correo válido.', 'crimson');
         return;
       }
@@ -145,9 +150,7 @@
       button.textContent = 'Enviando…';
       showMsg('', '');
 
-      const { error } = await client
-        .from('suscriptores')
-        .insert({ email });
+      const { error } = await supa.from('suscriptores').insert({ email });
 
       if (error) {
         if (error.code === '23505') {
@@ -167,6 +170,162 @@
       showMsg('¡Gracias! Te contactaremos pronto.', '#2a8c5f');
       subscribeInput.value = '';
     });
+  }
+
+  // ---------- 6. Carrito de compras ----------
+  const cart = [];
+  const cartButton    = document.getElementById('cartButton');
+  const cartCount     = document.getElementById('cartCount');
+  const cartModal     = document.getElementById('cartModal');
+  const cartList      = document.getElementById('cartList');
+  const cartEmpty     = document.getElementById('cartEmpty');
+  const cartTotalEl   = document.getElementById('cartTotal');
+  const cartTotalWrap = document.getElementById('cartTotalWrap');
+  const cartForm      = document.getElementById('cartForm');
+  const cartEmail     = document.getElementById('cartEmail');
+  const cartSubmit    = document.getElementById('cartSubmit');
+  const cartMsg       = document.getElementById('cartMsg');
+  const planButtons   = document.querySelectorAll('.plan__cta');
+
+  const updateBadge = () => {
+    cartCount.hidden = cart.length === 0;
+    cartCount.textContent = cart.length;
+  };
+
+  const updatePlanButtons = () => {
+    planButtons.forEach(btn => {
+      const inCart = cart.some(item => item.plan === btn.dataset.plan);
+      btn.disabled = inCart;
+      btn.textContent = inCart ? '✓ En el carrito' : 'Añadir al carrito';
+      btn.classList.toggle('is-in-cart', inCart);
+    });
+  };
+
+  const renderCartItems = () => {
+    cartList.innerHTML = '';
+
+    if (cart.length === 0) {
+      cartEmpty.hidden = false;
+      cartTotalWrap.hidden = true;
+      cartForm.hidden = true;
+      return;
+    }
+
+    cartEmpty.hidden = true;
+    cartTotalWrap.hidden = false;
+    cartForm.hidden = false;
+
+    let total = 0;
+    cart.forEach((item, idx) => {
+      total += item.price;
+      const row = document.createElement('div');
+      row.className = 'cart-item';
+      row.innerHTML = `
+        <div class="cart-item__info">
+          <span class="cart-item__name">Plan ${item.plan}</span>
+          <span class="cart-item__price">$${item.price} / mes</span>
+        </div>
+        <button type="button" class="cart-item__remove" data-remove="${idx}" aria-label="Quitar del carrito">✕</button>
+      `;
+      cartList.appendChild(row);
+    });
+
+    cartTotalEl.textContent = total;
+  };
+
+  const refreshCart = () => {
+    updateBadge();
+    updatePlanButtons();
+    renderCartItems();
+  };
+
+  const openCart = () => {
+    cartModal.hidden = false;
+    requestAnimationFrame(() => cartModal.classList.add('is-open'));
+    cartModal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+  };
+
+  const closeCart = () => {
+    cartModal.classList.remove('is-open');
+    cartModal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+    setTimeout(() => { cartModal.hidden = true; }, 350);
+  };
+
+  if (cartButton && cartModal) {
+    planButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const plan = btn.dataset.plan;
+        const price = Number(btn.dataset.price);
+        if (cart.some(item => item.plan === plan)) return;
+        cart.push({ plan, price });
+        refreshCart();
+      });
+    });
+
+    cartList.addEventListener('click', (e) => {
+      const removeBtn = e.target.closest('[data-remove]');
+      if (!removeBtn) return;
+      cart.splice(Number(removeBtn.dataset.remove), 1);
+      refreshCart();
+    });
+
+    cartButton.addEventListener('click', openCart);
+    cartModal.addEventListener('click', (e) => {
+      if (e.target.matches('[data-close-modal]')) closeCart();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !cartModal.hidden) closeCart();
+    });
+
+    if (cartForm && supa) {
+      cartForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (cart.length === 0) return;
+
+        const email = cartEmail.value.trim();
+        if (!email || !isValidEmail(email)) {
+          cartMsg.textContent = 'Ingresa un correo válido.';
+          cartMsg.style.color = 'crimson';
+          return;
+        }
+
+        const total = cart.reduce((sum, item) => sum + item.price, 0);
+
+        cartSubmit.disabled = true;
+        cartSubmit.textContent = 'Enviando…';
+        cartMsg.textContent = '';
+
+        const { error } = await supa.from('pedidos').insert({
+          email,
+          planes: cart.map(item => ({ plan: item.plan, price: item.price })),
+          total
+        });
+
+        if (error) {
+          console.error('[Supabase pedidos]', error);
+          cartSubmit.disabled = false;
+          cartSubmit.textContent = 'Confirmar pedido';
+          cartMsg.textContent = 'Error al enviar. Intenta de nuevo.';
+          cartMsg.style.color = 'crimson';
+          return;
+        }
+
+        cartSubmit.textContent = 'Enviado ✓';
+        cartMsg.textContent = '¡Pedido recibido! Te contactaremos pronto.';
+        cartMsg.style.color = '#2a8c5f';
+        cart.length = 0;
+        cartEmail.value = '';
+        setTimeout(() => {
+          refreshCart();
+          closeCart();
+          cartSubmit.disabled = false;
+          cartSubmit.textContent = 'Confirmar pedido';
+          cartMsg.textContent = '';
+        }, 2200);
+      });
+    }
   }
 
 })();

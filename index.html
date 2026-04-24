@@ -45,6 +45,13 @@
     <li><a href="#pricing">Planes</a></li>
     <li><a href="#contact">Contacto</a></li>
   </ul>
+  <button class="nav__cart" id="cartButton" type="button" aria-label="Ver carrito">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M5 7h14l-1.5 12a2 2 0 0 1-2 1.5H8.5a2 2 0 0 1-2-1.5L5 7z"/>
+      <path d="M9 7V5a3 3 0 0 1 6 0v2"/>
+    </svg>
+    <span class="nav__cart-count" id="cartCount" hidden>0</span>
+  </button>
 </nav>
 
 <!-- ================= HERO ================= -->
@@ -387,6 +394,32 @@
   <span>© 2026 CataMama Fit</span>
   <span>Made with intention · Medellín / Worldwide</span>
 </footer>
+
+<!-- ================= CART MODAL ================= -->
+<div class="cart-modal" id="cartModal" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
+  <div class="cart-modal__backdrop" data-close-modal></div>
+  <div class="cart-modal__panel">
+    <button class="cart-modal__close" type="button" data-close-modal aria-label="Cerrar carrito">✕</button>
+    <span class="eyebrow">Tu selección</span>
+    <h3 class="cart-modal__title" id="cartTitle">Revisa y <em>confirma.</em></h3>
+
+    <div class="cart-modal__list" id="cartList"></div>
+    <p class="cart-modal__empty" id="cartEmpty">Aún no has elegido ningún plan.</p>
+
+    <div class="cart-modal__total" id="cartTotalWrap" hidden>
+      <span class="cart-modal__total-label">Total mensual</span>
+      <strong class="cart-modal__total-value">
+        <span class="cart-modal__currency">$</span><span id="cartTotal">0</span>
+      </strong>
+    </div>
+
+    <form class="cart-modal__form" id="cartForm" novalidate hidden>
+      <input type="email" id="cartEmail" placeholder="tu@correo.com" required />
+      <button type="submit" id="cartSubmit">Confirmar pedido</button>
+    </form>
+    <p class="cart-modal__msg" id="cartMsg" role="status" aria-live="polite"></p>
+  </div>
+</div>
 
 </body>
 </html>
