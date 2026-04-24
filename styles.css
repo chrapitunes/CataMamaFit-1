@@ -1014,6 +1014,7 @@ section {
   align-items: center;
   justify-content: center;
 }
+.nav__cart-count[hidden] { display: none; }
 
 /* =========================================================
    CART MODAL
@@ -1132,6 +1133,7 @@ body.modal-open { overflow: hidden; }
   padding: 1rem 0 0.5rem;
   border-top: 1px solid var(--border);
 }
+.cart-modal__total[hidden] { display: none; }
 .cart-modal__total-label {
   font-family: var(--f-mono);
   font-size: 0.72rem;
@@ -1152,6 +1154,8 @@ body.modal-open { overflow: hidden; }
 }
 
 .cart-modal__form { display: flex; flex-direction: column; gap: 0.65rem; }
+.cart-modal__form[hidden] { display: none; }
+.cart-modal[hidden] { display: none; }
 .cart-modal__form input {
   padding: 0.9rem 1.25rem;
   background: transparent;
