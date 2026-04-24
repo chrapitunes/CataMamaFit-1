@@ -815,3 +815,152 @@ section {
   .scroll-rotator { display: none; }
   .float-weight.is-visible svg { animation: none; }
 }
+
+/* =========================================================
+   PLANES / PRICING
+   ========================================================= */
+.pricing {
+  margin-top: clamp(3rem, 6vh, 5rem);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  align-items: stretch;
+}
+@media (max-width: 960px) {
+  .pricing {
+    grid-template-columns: 1fr;
+    max-width: 440px;
+    margin-inline: auto;
+  }
+}
+
+.plan {
+  position: relative;
+  padding: clamp(2rem, 3vw, 2.75rem);
+  border: 1px solid var(--border);
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  transition: transform 0.5s var(--ease), background 0.5s var(--ease), border-color 0.5s var(--ease);
+}
+.plan:hover {
+  background: var(--bg-alt);
+  transform: translateY(-4px);
+}
+
+.plan--featured {
+  border-color: var(--accent);
+  background: var(--bg-alt);
+}
+
+.plan__badge {
+  position: absolute;
+  top: -0.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--accent);
+  color: var(--bg);
+  font-family: var(--f-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.plan__tag {
+  font-family: var(--f-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+
+.plan__name {
+  font-family: var(--f-display);
+  font-style: italic;
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+}
+
+.plan__price {
+  display: flex;
+  align-items: baseline;
+  gap: 0.15rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+.plan__currency {
+  font-family: var(--f-display);
+  font-size: 1.5rem;
+  color: var(--fg-dim);
+}
+.plan__amount {
+  font-family: var(--f-display);
+  font-size: clamp(3rem, 5vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+.plan__period {
+  font-family: var(--f-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  color: var(--fg-dim);
+  margin-left: 0.5rem;
+  text-transform: uppercase;
+}
+
+.plan__desc {
+  color: var(--fg-dim);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.plan__features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1;
+}
+.plan__features li {
+  font-size: 0.9rem;
+  line-height: 1.45;
+  padding-left: 1.5rem;
+  position: relative;
+}
+.plan__features li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--accent);
+  font-family: var(--f-mono);
+}
+
+.plan__cta {
+  margin-top: 0.5rem;
+  padding: 0.95rem 1.5rem;
+  background: var(--fg);
+  color: var(--bg);
+  font-family: var(--f-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  transition: background 0.4s var(--ease), transform 0.4s var(--ease);
+}
+.plan__cta:hover {
+  background: var(--accent);
+  transform: scale(1.02);
+}
+.plan--featured .plan__cta {
+  background: var(--accent);
+}
+.plan--featured .plan__cta:hover {
+  background: var(--fg);
+}

@@ -150,6 +150,12 @@
         .insert({ email });
 
       if (error) {
+        if (error.code === '23505') {
+          button.textContent = 'Ya registrado ✓';
+          showMsg('Este correo ya está en nuestra lista. ¡Gracias!', '#2a8c5f');
+          subscribeInput.value = '';
+          return;
+        }
         console.error('[Supabase]', error);
         button.disabled = false;
         button.textContent = originalLabel;
