@@ -668,6 +668,15 @@ section {
   transition: transform 0.4s var(--ease), background 0.4s var(--ease);
 }
 .contact__form button:hover { transform: scale(1.03); background: var(--fg); }
+.contact__form button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.contact__form-msg {
+  max-width: 520px;
+  margin: 0.9rem auto 0;
+  font-size: 0.85rem;
+  text-align: center;
+  min-height: 1.2em;
+  transition: color 0.3s var(--ease);
+}
 
 .contact__socials {
   margin-top: 4rem;

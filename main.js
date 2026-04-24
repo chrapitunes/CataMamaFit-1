@@ -114,4 +114,53 @@
     });
   });
 
+  // ---------- 5. Formulario de suscripción (Supabase) ----------
+  const SUPABASE_URL = 'https://qmhhumtnvgocktacgxao.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_ioHeTOusppm0RkqiELhwAg_IftXD6Vk';
+
+  const subscribeForm  = document.getElementById('subscribeForm');
+  const subscribeMsg   = document.getElementById('subscribeMsg');
+  const subscribeInput = document.getElementById('subscribeEmail');
+
+  if (subscribeForm && window.supabase) {
+    const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    const button = subscribeForm.querySelector('button');
+    const originalLabel = button.textContent;
+
+    const showMsg = (text, color) => {
+      subscribeMsg.textContent = text;
+      subscribeMsg.style.color = color;
+    };
+
+    subscribeForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = subscribeInput.value.trim();
+
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showMsg('Por favor ingresa un correo válido.', 'crimson');
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = 'Enviando…';
+      showMsg('', '');
+
+      const { error } = await client
+        .from('suscriptores')
+        .insert({ email });
+
+      if (error) {
+        console.error('[Supabase]', error);
+        button.disabled = false;
+        button.textContent = originalLabel;
+        showMsg('Hubo un problema al enviar. Intenta de nuevo.', 'crimson');
+        return;
+      }
+
+      button.textContent = 'Enviado ✓';
+      showMsg('¡Gracias! Te contactaremos pronto.', '#2a8c5f');
+      subscribeInput.value = '';
+    });
+  }
+
 })();

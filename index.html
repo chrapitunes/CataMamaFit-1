@@ -13,6 +13,8 @@
 
 <!-- Estilos externos -->
 <link rel="stylesheet" href="styles.css">
+<!-- Supabase (base de datos) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
 <!-- Script diferido -->
 <script src="main.js" defer></script>
 </head>
@@ -291,10 +293,11 @@
       <h2 class="contact__title">Empieza <em>hoy.</em></h2>
       <p class="contact__sub">Agenda una llamada gratuita de 20 minutos. Sin venta dura, sin compromisos. Solo una conversación honesta sobre dónde estás y a dónde quieres llegar.</p>
 
-      <form class="contact__form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Enviado ✓';">
-        <input type="email" placeholder="tu@correo.com" required />
+      <form class="contact__form" id="subscribeForm" novalidate>
+        <input type="email" id="subscribeEmail" placeholder="tu@correo.com" required />
         <button type="submit">Reservar llamada</button>
       </form>
+      <p class="contact__form-msg" id="subscribeMsg" role="status" aria-live="polite"></p>
 
       <div class="contact__socials">
         <a href="https://instagram.com/catamamafit" target="_blank" rel="noopener noreferrer">Instagram</a>
