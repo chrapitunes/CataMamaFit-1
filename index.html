@@ -45,13 +45,25 @@
     <li><a href="#pricing">Planes</a></li>
     <li><a href="#contact">Contacto</a></li>
   </ul>
-  <button class="nav__cart" id="cartButton" type="button" aria-label="Ver carrito">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <path d="M5 7h14l-1.5 12a2 2 0 0 1-2 1.5H8.5a2 2 0 0 1-2-1.5L5 7z"/>
-      <path d="M9 7V5a3 3 0 0 1 6 0v2"/>
-    </svg>
-    <span class="nav__cart-count" id="cartCount" hidden>0</span>
-  </button>
+  <div class="nav__actions">
+    <button class="nav__auth" id="authButton" type="button">Entrar</button>
+    <div class="nav__user" id="userMenu" hidden>
+      <button class="nav__user-trigger" id="userTrigger" type="button" aria-haspopup="true" aria-expanded="false">
+        <span class="nav__user-email" id="userEmail">—</span>
+        <svg viewBox="0 0 12 8" width="10" height="7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M1 1.5l5 5 5-5"/></svg>
+      </button>
+      <div class="nav__user-dropdown" id="userDropdown" hidden>
+        <button type="button" id="logoutButton">Cerrar sesión</button>
+      </div>
+    </div>
+    <button class="nav__cart" id="cartButton" type="button" aria-label="Ver carrito">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M5 7h14l-1.5 12a2 2 0 0 1-2 1.5H8.5a2 2 0 0 1-2-1.5L5 7z"/>
+        <path d="M9 7V5a3 3 0 0 1 6 0v2"/>
+      </svg>
+      <span class="nav__cart-count" id="cartCount" hidden>0</span>
+    </button>
+  </div>
 </nav>
 
 <!-- ================= HERO ================= -->
@@ -394,6 +406,35 @@
   <span>© 2026 CataMama Fit</span>
   <span>Made with intention · Medellín / Worldwide</span>
 </footer>
+
+<!-- ================= AUTH MODAL ================= -->
+<div class="auth-modal" id="authModal" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+  <div class="auth-modal__backdrop" data-close-auth></div>
+  <div class="auth-modal__panel">
+    <button class="auth-modal__close" type="button" data-close-auth aria-label="Cerrar">✕</button>
+    <span class="eyebrow">Tu cuenta</span>
+    <h3 class="auth-modal__title" id="authTitle">Bienvenida <em>de vuelta.</em></h3>
+
+    <div class="auth-modal__tabs" role="tablist">
+      <button class="auth-modal__tab is-active" type="button" role="tab" data-auth-tab="login" aria-selected="true">Entrar</button>
+      <button class="auth-modal__tab" type="button" role="tab" data-auth-tab="signup" aria-selected="false">Crear cuenta</button>
+    </div>
+
+    <form class="auth-modal__form" id="loginForm" novalidate>
+      <input type="email" name="email" placeholder="tu@correo.com" required />
+      <input type="password" name="password" placeholder="Contraseña" required minlength="6" />
+      <button type="submit">Entrar</button>
+    </form>
+
+    <form class="auth-modal__form" id="signupForm" novalidate hidden>
+      <input type="email" name="email" placeholder="tu@correo.com" required />
+      <input type="password" name="password" placeholder="Contraseña (mín. 6 caracteres)" required minlength="6" />
+      <button type="submit">Crear cuenta</button>
+    </form>
+
+    <p class="auth-modal__msg" id="authMsg" role="status" aria-live="polite"></p>
+  </div>
+</div>
 
 <!-- ================= CART MODAL ================= -->
 <div class="cart-modal" id="cartModal" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="cartTitle">

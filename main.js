@@ -328,4 +328,182 @@
     }
   }
 
+  // ---------- 7. Autenticación (Supabase Auth) ----------
+  const authButton    = document.getElementById('authButton');
+  const userMenu      = document.getElementById('userMenu');
+  const userTrigger   = document.getElementById('userTrigger');
+  const userEmailEl   = document.getElementById('userEmail');
+  const userDropdown  = document.getElementById('userDropdown');
+  const logoutButton  = document.getElementById('logoutButton');
+  const authModal     = document.getElementById('authModal');
+  const authTabs      = document.querySelectorAll('[data-auth-tab]');
+  const loginForm     = document.getElementById('loginForm');
+  const signupForm    = document.getElementById('signupForm');
+  const authMsg       = document.getElementById('authMsg');
+
+  const showAuthMsg = (text, color) => {
+    authMsg.textContent = text;
+    authMsg.style.color = color || '';
+  };
+
+  const reflectSession = (session) => {
+    const user = session?.user;
+    if (user) {
+      authButton.hidden = true;
+      userMenu.hidden = false;
+      userEmailEl.textContent = user.email;
+    } else {
+      authButton.hidden = false;
+      userMenu.hidden = true;
+      userDropdown.hidden = true;
+      userTrigger?.setAttribute('aria-expanded', 'false');
+    }
+  };
+
+  const openAuth = () => {
+    authModal.hidden = false;
+    requestAnimationFrame(() => authModal.classList.add('is-open'));
+    authModal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+  };
+
+  const closeAuth = () => {
+    authModal.classList.remove('is-open');
+    authModal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+    setTimeout(() => { authModal.hidden = true; }, 350);
+    showAuthMsg('', '');
+  };
+
+  const switchTab = (tab) => {
+    authTabs.forEach(t => {
+      const active = t.dataset.authTab === tab;
+      t.classList.toggle('is-active', active);
+      t.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+    loginForm.hidden  = tab !== 'login';
+    signupForm.hidden = tab !== 'signup';
+    showAuthMsg('', '');
+  };
+
+  if (authButton && authModal && supa) {
+    // Estado inicial
+    supa.auth.getSession().then(({ data }) => reflectSession(data.session));
+    supa.auth.onAuthStateChange((_event, session) => reflectSession(session));
+
+    // Abrir / cerrar modal
+    authButton.addEventListener('click', () => {
+      switchTab('login');
+      openAuth();
+    });
+    authModal.addEventListener('click', (e) => {
+      if (e.target.matches('[data-close-auth]')) closeAuth();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !authModal.hidden) closeAuth();
+    });
+
+    // Tabs
+    authTabs.forEach(tab => {
+      tab.addEventListener('click', () => switchTab(tab.dataset.authTab));
+    });
+
+    // Login
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = loginForm.email.value.trim();
+      const password = loginForm.password.value;
+
+      if (!isValidEmail(email)) {
+        showAuthMsg('Ingresa un correo válido.', 'crimson');
+        return;
+      }
+
+      const button = loginForm.querySelector('button');
+      button.disabled = true;
+      button.textContent = 'Entrando…';
+      showAuthMsg('', '');
+
+      const { error } = await supa.auth.signInWithPassword({ email, password });
+
+      button.disabled = false;
+      button.textContent = 'Entrar';
+
+      if (error) {
+        console.error('[Auth login]', error);
+        showAuthMsg('Correo o contraseña incorrectos.', 'crimson');
+        return;
+      }
+
+      showAuthMsg('¡Bienvenida!', '#2a8c5f');
+      loginForm.reset();
+      setTimeout(closeAuth, 800);
+    });
+
+    // Signup
+    signupForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = signupForm.email.value.trim();
+      const password = signupForm.password.value;
+
+      if (!isValidEmail(email)) {
+        showAuthMsg('Ingresa un correo válido.', 'crimson');
+        return;
+      }
+      if (password.length < 6) {
+        showAuthMsg('La contraseña debe tener al menos 6 caracteres.', 'crimson');
+        return;
+      }
+
+      const button = signupForm.querySelector('button');
+      button.disabled = true;
+      button.textContent = 'Creando cuenta…';
+      showAuthMsg('', '');
+
+      const { data, error } = await supa.auth.signUp({ email, password });
+
+      button.disabled = false;
+      button.textContent = 'Crear cuenta';
+
+      if (error) {
+        console.error('[Auth signup]', error);
+        if (error.message?.toLowerCase().includes('registered')) {
+          showAuthMsg('Este correo ya tiene una cuenta. Inicia sesión.', 'crimson');
+        } else {
+          showAuthMsg('No se pudo crear la cuenta. Intenta de nuevo.', 'crimson');
+        }
+        return;
+      }
+
+      if (data.session) {
+        showAuthMsg('¡Cuenta creada! Entrando…', '#2a8c5f');
+        signupForm.reset();
+        setTimeout(closeAuth, 800);
+      } else {
+        showAuthMsg('Revisa tu correo para confirmar la cuenta.', '#2a8c5f');
+        signupForm.reset();
+      }
+    });
+
+    // Dropdown usuario
+    userTrigger?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = userDropdown.hidden;
+      userDropdown.hidden = !open;
+      userTrigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!userMenu.contains(e.target)) {
+        userDropdown.hidden = true;
+        userTrigger?.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Logout
+    logoutButton?.addEventListener('click', async () => {
+      await supa.auth.signOut();
+    });
+  }
+
 })();
