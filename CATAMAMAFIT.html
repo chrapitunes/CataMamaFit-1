@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="CataMama Fit — Entrenamiento consciente para mujeres que eligen moverse con intención." />
+<title>CataMama Fit — Move with intention</title>
+
+<!-- Tipografías -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Estilos externos -->
+<link rel="stylesheet" href="styles.css">
+<!-- Script diferido -->
+<script src="main.js" defer></script>
+</head>
+
+<body>
+<!-- =========================================================
+     HTML
+     ========================================================= -->
+
+<!-- Progress bar + cursor -->
+<div class="scroll-progress" id="scrollProgress"></div>
+<div class="cursor-dot" id="cursor"></div>
+
+<!-- Elemento tipográfico gigante rotatorio (scroll-driven) -->
+<div class="scroll-rotator" aria-hidden="true">
+  <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+    <text x="50%" y="55%" text-anchor="middle" dominant-baseline="middle">fit.</text>
+  </svg>
+</div>
+
+<!-- Nav -->
+<nav class="nav">
+  <a href="#" class="nav__logo">CataMama<em>Fit</em></a>
+  <ul class="nav__links">
+    <li><a href="#work">Método</a></li>
+    <li><a href="#about">Historia</a></li>
+    <li><a href="#vision">Propósito</a></li>
+    <li><a href="#contact">Contacto</a></li>
+  </ul>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+
+  <!-- Pesas flotantes -->
+  <div class="float-weight float-weight--a" aria-hidden="true">
+    <svg viewBox="0 0 140 44" xmlns="http://www.w3.org/2000/svg"><g fill="currentColor">
+      <rect x="0" y="8" width="14" height="28" rx="3"/>
+      <rect x="16" y="14" width="8" height="16" rx="2"/>
+      <rect x="24" y="19" width="92" height="6" rx="1"/>
+      <rect x="116" y="14" width="8" height="16" rx="2"/>
+      <rect x="126" y="8" width="14" height="28" rx="3"/>
+    </g></svg>
+  </div>
+  <div class="float-weight float-weight--b" aria-hidden="true">
+    <svg viewBox="0 0 80 36" xmlns="http://www.w3.org/2000/svg"><g fill="currentColor">
+      <rect x="0" y="4" width="14" height="28" rx="3"/>
+      <rect x="14" y="14" width="52" height="8" rx="1"/>
+      <rect x="66" y="4" width="14" height="28" rx="3"/>
+    </g></svg>
+  </div>
+
+  <div class="hero__meta">
+    <div class="hero__meta-left">
+      <span class="mono">Est. 2019 — Medellín, CO</span>
+      <p>Entrenamiento consciente para mujeres que eligen moverse con intención, no por obligación.</p>
+    </div>
+    <div class="hero__meta-right">
+      <span class="mono">(01) Presencial · Online</span>
+      <p>Programas diseñados alrededor de tu ciclo, tu energía y tus tiempos reales.</p>
+    </div>
+  </div>
+
+  <h1 class="hero__title">
+    <span class="line-1"><span>Move</span></span>
+    <span class="line-2"><span>with</span></span>
+    <span class="line-3"><span>intention.</span></span>
+  </h1>
+
+  <div class="hero__bottom">
+    <a href="#contact" class="hero__cta">
+      <span>Comienza tu transformación</span>
+      <span class="arrow">→</span>
+    </a>
+    <span class="mono" style="color: var(--fg-dim);">Scroll · (02)</span>
+  </div>
+
+  <!-- Badge circular -->
+  <div class="hero__badge" aria-hidden="true">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <path id="circle" d="M 100, 100 m -75, 0 a 75,75 0 1,1 150,0 a 75,75 0 1,1 -150,0" />
+      </defs>
+      <g class="badge-text">
+        <text font-family="JetBrains Mono" font-size="11" letter-spacing="3" fill="#2E2319">
+          <textPath href="#circle">·CATAMAMA FIT · MOVE WITH INTENTION · CATAMAMAFIT ·</textPath>
+        </text>
+      </g>
+      <text class="badge-center" x="50%" y="55%" text-anchor="middle">✦</text>
+    </svg>
+  </div>
+
+  <div class="scroll-hint">Scroll</div>
+</header>
+
+<!-- ================= ¿QUÉ HAGO? ================= -->
+<section id="work">
+  <div class="float-weight float-weight--c" aria-hidden="true">
+    <svg viewBox="0 0 80 36" xmlns="http://www.w3.org/2000/svg"><g fill="currentColor">
+      <rect x="0" y="4" width="14" height="28" rx="3"/>
+      <rect x="14" y="14" width="52" height="8" rx="1"/>
+      <rect x="66" y="4" width="14" height="28" rx="3"/>
+    </g></svg>
+  </div>
+  <div class="container">
+
+    <div class="section-head reveal">
+      <span class="section-head__index">(01) — ¿Qué hago?</span>
+      <h2 class="section-head__title">Entreno cuerpos. <em>Reeduco hábitos.</em></h2>
+    </div>
+
+    <div class="services reveal-stagger">
+
+      <article class="service">
+        <span class="service__num">01</span>
+        <h3 class="service__title">Entrenamiento personalizado</h3>
+        <p class="service__desc">Planes de fuerza y movilidad construidos en torno a tu cuerpo real, tu historia clínica y tu ritmo de vida. Sin plantillas recicladas.</p>
+        <span class="service__tag">1:1 · 60 min</span>
+      </article>
+
+      <article class="service">
+        <span class="service__num">02</span>
+        <h3 class="service__title">Programa online 12 semanas</h3>
+        <p class="service__desc">Metodología progresiva con seguimiento semanal, ajustes en vivo y una comunidad que te sostiene cuando la motivación flaquea.</p>
+        <span class="service__tag">Online · Grupal</span>
+      </article>
+
+      <article class="service">
+        <span class="service__num">03</span>
+        <h3 class="service__title">Coaching postparto</h3>
+        <p class="service__desc">Recuperación de suelo pélvico, core y autoestima. Una reconstrucción honesta, sin promesas de "volver a ser la de antes".</p>
+        <span class="service__tag">Especializado</span>
+      </article>
+
+      <article class="service">
+        <span class="service__num">04</span>
+        <h3 class="service__title">Mentoría de hábitos</h3>
+        <p class="service__desc">Nutrición intuitiva, descanso y manejo del estrés. Porque ningún entrenamiento compensa una vida en deuda con tu cuerpo.</p>
+        <span class="service__tag">Mensual</span>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= MARQUEE divisor ================= -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    <span class="marquee__item">Fuerza</span>
+    <span class="marquee__item serif-ita"><em>intención</em></span>
+    <span class="marquee__item">constancia</span>
+    <span class="marquee__item serif-ita"><em>alma</em></span>
+    <span class="marquee__item">disciplina</span>
+    <span class="marquee__item serif-ita"><em>presencia</em></span>
+    <!-- Duplicado para loop infinito -->
+    <span class="marquee__item">Fuerza</span>
+    <span class="marquee__item serif-ita"><em>intención</em></span>
+    <span class="marquee__item">constancia</span>
+    <span class="marquee__item serif-ita"><em>alma</em></span>
+    <span class="marquee__item">disciplina</span>
+    <span class="marquee__item serif-ita"><em>presencia</em></span>
+  </div>
+</div>
+
+<!-- ================= ¿QUIÉN SOY? ================= -->
+<section id="about">
+  <div class="float-weight float-weight--d" aria-hidden="true">
+    <svg viewBox="0 0 140 44" xmlns="http://www.w3.org/2000/svg"><g fill="currentColor">
+      <rect x="0" y="8" width="14" height="28" rx="3"/>
+      <rect x="16" y="14" width="8" height="16" rx="2"/>
+      <rect x="24" y="19" width="92" height="6" rx="1"/>
+      <rect x="116" y="14" width="8" height="16" rx="2"/>
+      <rect x="126" y="8" width="14" height="28" rx="3"/>
+    </g></svg>
+  </div>
+  <div class="float-weight float-weight--g" aria-hidden="true">
+    <svg viewBox="0 0 80 36" xmlns="http://www.w3.org/2000/svg"><g fill="currentColor">
+      <rect x="0" y="4" width="14" height="28" rx="3"/>
+      <rect x="14" y="14" width="52" height="8" rx="1"/>
+      <rect x="66" y="4" width="14" height="28" rx="3"/>
+    </g></svg>
+  </div>
+  <div class="container">
+
+    <div class="section-head reveal">
+      <span class="section-head__index">(02) — ¿Quién soy?</span>
+      <h2 class="section-head__title">Una madre que entrena. <em>Una entrenadora que es madre.</em></h2>
+    </div>
+
+    <div class="about">
+
+      <div class="about__portrait reveal">
+        <span class="about__portrait-label">Cata · Medellín</span>
+      </div>
+
+      <div class="about__body reveal">
+        <h3>Soy Catalina. Llevo <em>una década</em> enseñando que el cuerpo se gana con paciencia, no con castigo.</h3>
+        <p>Empecé entrenando en un garaje con pesas prestadas y la certeza de que el <strong>fitness tradicional</strong> le fallaba a las mujeres. Sobre todo a las que éramos madres, trabajadoras, cuidadoras — las que llegamos al entrenamiento con agendas rotas y cuerpos que nadie había mirado de verdad.</p>
+        <p>Hoy, después de cientos de clientas, dos embarazos propios y una especialización en <strong>entrenamiento perinatal</strong>, construí un método que no pide sacrificar tu vida para tener un cuerpo fuerte. Lo pide al revés: que uses tu cuerpo fuerte para vivir mejor.</p>
+        <p>No soy tu coach motivacional. Soy tu entrenadora, y si llegamos hasta aquí es porque decidiste que mereces más que otro mes de promesas vacías.</p>
+
+        <div class="about__stats">
+          <div class="stat">
+            <div class="stat__num">+800</div>
+            <div class="stat__label">Mujeres entrenadas</div>
+          </div>
+          <div class="stat">
+            <div class="stat__num">10</div>
+            <div class="stat__label">Años de método</div>
+          </div>
+          <div class="stat">
+            <div class="stat__num">94%</div>
+            <div class="stat__label">Retención anual</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= ¿A DÓNDE VOY? ================= -->
+<section id="vision">
+  <div class="float-weight float-weight--e" aria-hidden="true">
+    <svg viewBox="0 0 80 36" xmlns="http://www.w3.org/2000/svg"><g fill="currentColor">
+      <rect x="0" y="4" width="14" height="28" rx="3"/>
+      <rect x="14" y="14" width="52" height="8" rx="1"/>
+      <rect x="66" y="4" width="14" height="28" rx="3"/>
+    </g></svg>
+  </div>
+  <div class="container">
+
+    <div class="section-head reveal">
+      <span class="section-head__index">(03) — ¿A dónde voy?</span>
+      <h2 class="section-head__title">No construyo cuerpos. <em>Construyo autonomía.</em></h2>
+    </div>
+
+    <div class="vision reveal-stagger">
+
+      <article class="pillar">
+        <span class="pillar__num">Misión / 01</span>
+        <p class="pillar__desc">Darles a mujeres reales —con trabajos, hijos y fatiga acumulada— un método de entrenamiento que no les quite más de lo que ya les quitó la vida. Fuerza sin burnout. Resultados sin culpa.</p>
+        <h4 class="pillar__title">Entrenar sin romperse.</h4>
+      </article>
+
+      <article class="pillar">
+        <span class="pillar__num">Visión / 02</span>
+        <p class="pillar__desc">Una generación de mujeres que no le tema al gimnasio, que entienda su ciclo, que levante peso con la misma naturalidad con la que carga a sus hijos. Cuerpos funcionales, mentes soberanas.</p>
+        <h4 class="pillar__title">Fuerza como estándar, no privilegio.</h4>
+      </article>
+
+      <article class="pillar">
+        <span class="pillar__num">Propósito / 03</span>
+        <p class="pillar__desc">Que cada clienta termine nuestro proceso sabiendo entrenarse sola. Mi éxito no se mide en cuánto me necesitas, sino en qué tan pronto puedes prescindir de mí.</p>
+        <h4 class="pillar__title">Devolverte tu cuerpo.</h4>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACTO ================= -->
+<section id="contact" class="contact">
+  <div class="float-weight float-weight--f" aria-hidden="true">
+    <svg viewBox="0 0 140 44" xmlns="http://www.w3.org/2000/svg"><g fill="currentColor">
+      <rect x="0" y="8" width="14" height="28" rx="3"/>
+      <rect x="16" y="14" width="8" height="16" rx="2"/>
+      <rect x="24" y="19" width="92" height="6" rx="1"/>
+      <rect x="116" y="14" width="8" height="16" rx="2"/>
+      <rect x="126" y="8" width="14" height="28" rx="3"/>
+    </g></svg>
+  </div>
+  <div class="container">
+    <div class="reveal">
+      <span class="eyebrow contact__eyebrow">(04) — Último paso</span>
+      <h2 class="contact__title">Empieza <em>hoy.</em></h2>
+      <p class="contact__sub">Agenda una llamada gratuita de 20 minutos. Sin venta dura, sin compromisos. Solo una conversación honesta sobre dónde estás y a dónde quieres llegar.</p>
+
+      <form class="contact__form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Enviado ✓';">
+        <input type="email" placeholder="tu@correo.com" required />
+        <button type="submit">Reservar llamada</button>
+      </form>
+
+      <div class="contact__socials">
+        <a href="https://instagram.com/catamamafit" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://www.tiktok.com/@catamamafit" target="_blank" rel="noopener noreferrer">TikTok</a>
+        <a href="#" target="_blank" rel="noopener noreferrer">Youtube</a>
+        <a href="https://wa.me/573000000000" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <span>© 2026 CataMama Fit</span>
+  <span>Made with intention · Medellín / Worldwide</span>
+</footer>
+
+</body>
+</html>
